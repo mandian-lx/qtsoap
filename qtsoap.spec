@@ -4,7 +4,7 @@
 
 Name:           qtsoap
 Version:        2.7
-Release:        1
+Release:        2
 Summary:        The Simple Object Access Protocol Qt-based client side library
 
 Group:          Development/C
@@ -34,6 +34,7 @@ services and get responses from Qt-based applications.
 Summary:        Development files for %{name}
 Group:          Development/C
 Requires:       %{libname} = %{version}-%{release}
+Provides:	%{name}-devel
 
 %description -n    %{devname}
 Development files for %{name}.
