@@ -55,12 +55,12 @@ make INSTALL_ROOT=%{buildroot} install
 
 %files
 %doc README.TXT LGPL_EXCEPTION.txt LICENSE.GPL3 LICENSE.LGPL
-%{_qt4_libdir}/libqtsoap.so.*
+%{_qt_libdir}/libqtsoap.so.*
 
 %files devel
 %doc LGPL_EXCEPTION.txt LICENSE.GPL3 LICENSE.LGPL
-%{_qt4_libdir}/libqtsoap.so
-%{_qt4_includedir}/QtSoap/
+%{_qt_libdir}/libqtsoap.so
+%{_qt_includedir}/QtSoap/
 
 
 
