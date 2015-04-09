@@ -1,6 +1,6 @@
 Name:           qtsoap
 Version:        2.7
-Release:        %mkrel 7
+Release:        1
 Summary:        The Simple Object Access Protocol Qt-based client side library
 
 Group:          Development/C
