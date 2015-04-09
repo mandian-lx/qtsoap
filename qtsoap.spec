@@ -30,12 +30,12 @@ The SOAP (Simple Object Access Protocol) library uses the XML standard
 for describing how to exchange messages. Its primary usage is to invoke web
 services and get responses from Qt-based applications.
 
-%package        %devname
+%package -n      %devname
 Summary:        Development files for %{name}
 Group:          Development/C
 Requires:       %{libname} = %{version}-%{release}
 
-%description    %{devname}
+%description -n    %{devname}
 Development files for %{name}.
 
 %prep
