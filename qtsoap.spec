@@ -1,6 +1,7 @@
 %define major 2.7.0
 %define libname %mklibname qtsoap %{major}
 %define devname %mklibname -d qtsoap
+%define debug_package %{nil}
 
 Name:           qtsoap
 Version:        2.7
@@ -55,7 +56,7 @@ echo "QTSOAP_LIBNAME = \$\$qtLibraryTarget(qtsoap)" >> common.pri
 echo "VERSION=%{version}" >> common.pri
 
 qmake PREFIX=%{_prefix}
-make %{?_smp_mflags}
+%make
 
 
 %install
