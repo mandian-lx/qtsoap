@@ -1,49 +1,70 @@
+%define debug_package %nil
+
+%define commit 1fca9c330d8548d84fccb66407fbaf3aae122d17
+%define shortcommit %(c=%{commit}; echo ${c:0:7})
+
+%define project_name qt-solutions
+
 %define major 2.7.0
 %define libname %mklibname qtsoap %{major}
 %define devname %mklibname -d qtsoap
 
-Name:           qtsoap
-Version:        2.7
-Release:        3
-Summary:        The Simple Object Access Protocol Qt-based client side library
+Summary:	The Simple Object Access Protocol Qt-based client side library
+Name:		qtsoap
+Version:	%{major}
+Release:	4
+Group:		Development/KDE and Qt
+License:	BSD
+Url:		https://github.com/qtproject/qt-solutions/
+Source0:	https://github.com/qtproject/qt-solutions/archive/%{commit}/%{project_name}-%{commit}.tar.gz
+# headers are not installed for shared library
+Patch0:		qtsoap-2.7_1-opensource-install-pub-headers.patch
+Patch1:		qtsoap-2.7_1-port-to-qt5.patch
 
-Group:          Development/C
-License:        LGPLv2 with exceptions or GPLv3
-URL:            http://qt.nokia.com/products/appdev/add-on-products/catalog/4/Utilities/qtsoap/
-Source0:        http://get.qt.nokia.com/qt/solutions/lgpl/qtsoap-%{version}_1-opensource.tar.gz
-Patch0:         qtsoap-2.7_1-opensource-install-pub-headers.patch
-
-
-BuildRequires:  qt4-devel
+BuildRequires:	qt5-devel
 
 %description
 The SOAP (Simple Object Access Protocol) library uses the XML standard
 for describing how to exchange messages. Its primary usage is to invoke web
 services and get responses from Qt-based applications.
 
-%package -n     %{libname}
-Summary:        The Simple Object Access Protocol Qt-based client side library
-Group:          System/Libraries
+#--------------------------------------------------------------------
+
+%package -n %{libname}
+Summary:	The Simple Object Access Protocol Qt-based client side library
+Group:		System/Libraries
 
 %description -n %{libname}
 The SOAP (Simple Object Access Protocol) library uses the XML standard
 for describing how to exchange messages. Its primary usage is to invoke web
 services and get responses from Qt-based applications.
 
-%package -n      %devname
-Summary:        Development files for %{name}
-Group:          Development/C
-Requires:       %{libname} = %{version}-%{release}
+%files -n %{libname}
+%doc README.TXT
+%{_qt5_libdir}/libqtsoap.so.*
+
+#--------------------------------------------------------------------
+
+%package -n %{devname}
+Summary:	Development files for %{name}
+Group:		Development/C
+Requires:	%{libname} = %{version}-%{release}
 Provides:	%{name}-devel
 
-%description -n    %{devname}
+%description -n %{devname}
 Development files for %{name}.
 
-%prep
-%setup -q -n qtsoap-%{version}_1-opensource
+%files -n %{devname}
+%doc README.TXT
+%doc doc examples
+%{_qt5_libdir}/libqtsoap.so
+%{_qt5_includedir}/QtSoap/
 
-# headers are not installed for shared library
-%patch0 -p1 -b .install-pub-headers
+#--------------------------------------------------------------------
+
+%prep
+%setup -q -n %{project_name}-%{commit}/%{name}
+%apply_patches
 
 sed -i 's:$$DESTDIR:%{_libdir}:g' buildlib/buildlib.pro
 
@@ -51,23 +72,12 @@ sed -i 's:$$DESTDIR:%{_libdir}:g' buildlib/buildlib.pro
 # we want shared library
 echo "SOLUTIONS_LIBRARY = yes" > config.pri
 
-echo "QTSOAP_LIBNAME = \$\$qtLibraryTarget(qtsoap)" >> common.pri
+echo "QTSOAP_LIBNAME = \$\$qt5LibraryTarget(qtsoap)" >> common.pri
 echo "VERSION=%{version}" >> common.pri
 
-qmake PREFIX=%{_prefix}
-make %{?_smp_mflags}
-
+%qmake_qt5
+%make
 
 %install
-make INSTALL_ROOT=%{buildroot} install
-
-
-%files -n %libname
-%doc README.TXT LGPL_EXCEPTION.txt LICENSE.GPL3 LICENSE.LGPL
-%{_qt_libdir}/libqtsoap.so.*
-
-%files -n %devname
-%doc LGPL_EXCEPTION.txt LICENSE.GPL3 LICENSE.LGPL
-%{_qt_libdir}/libqtsoap.so
-%{_qt_includedir}/QtSoap/
+%makeinstall_std INSTALL_ROOT=%{buildroot}
 

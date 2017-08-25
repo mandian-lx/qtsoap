@@ -1,2 +1,4 @@
-sources:
+removed_sources:
   qtsoap-2.7_1-opensource.tar.gz: 59946d8f841f36b1fb8a6aa8cdf47b478c44b958
+sources:
+  qt-solutions-1fca9c330d8548d84fccb66407fbaf3aae122d17.tar.gz: 6ae8c95d78bbeded183901e8b737c5f4ba9a9652

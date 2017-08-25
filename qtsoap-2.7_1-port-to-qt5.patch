@@ -1,0 +1,30 @@
+--- qtsoap/src/qtsoap.cpp.qt5
++++ qtsoap/src/qtsoap.cpp
+@@ -3151,7 +3151,7 @@
+ {
+     QNetworkRequest networkReq;
+     networkReq.setHeader(QNetworkRequest::ContentTypeHeader, QLatin1String("text/xml;charset=utf-8"));
+-    networkReq.setRawHeader("SOAPAction", soapAction.toAscii());
++    networkReq.setRawHeader("SOAPAction", soapAction.toLatin1());
+     url.setPath(path);
+     networkReq.setUrl(url);
+ 
+--- qtsoap/examples/google/google.pro.qt5
++++ qtsoap/examples/google/google.pro
+@@ -1,5 +1,6 @@
+ TEMPLATE = app
+ INCLUDEPATH += .
++QT += widgets
+ 
+ include(../../src/qtsoap.pri)
+ 
+--- qtsoap/examples/population/population.pro.qt5
++++ qtsoap/examples/population/population.pro
+@@ -1,6 +1,7 @@
+ TEMPLATE = app
+ INCLUDEPATH += .
+ CONFIG += console
++QT += widgets
+ 
+ include(../../src/qtsoap.pri)
+
