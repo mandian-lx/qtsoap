@@ -4,7 +4,7 @@
  include(common.pri)
  qtsoap-uselib:SUBDIRS=buildlib
 -SUBDIRS+=examples
-+SUBDIRS+=examples
++
 +INSTALLS += PUB_HEADERS
 +
 +PUB_HEADERS.files = src/QtSoapArray src/QtSoapHttpTransport src/QtSoapNamespaces src/QtSoapSimpleType src/QtSoapStructIterator \
